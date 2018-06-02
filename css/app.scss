@@ -69,14 +69,14 @@ h1 {
     font-size: 33px;
 }*/
 
-.deck .card.open { //changes background color to open color
+.deck .card.open { /*changes background color to open color*/
     transform: rotateY(0);
     background: #02b3e4;
     cursor: default;
     font-size: 33px;
 }
 
-.deck .card.match { //changes background color to match color
+.deck .card.match { /*changes background color to match color*/
     cursor: default;
     background: #02ccba;
     font-size: 33px;

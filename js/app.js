@@ -1,6 +1,8 @@
 /*
  * Create a list that holds all of your cards
  */
+var cards = document.querySelector('.deck').getElementsByTagName('li');
+console.log(cards);
 
 
 /*
@@ -10,9 +12,42 @@
  *   - add each card's HTML to the page
  */
 
+ //ARRAY OF SYMBOLS FOR CARD icons
+/*
+var symbolsArray = [
+    'fa-anchor', //1
+    'fa-anchor', 
+
+    'fa-bicycle', //2
+    'fa-bicycle', 
+
+    'fa-bolt', //3
+    'fa-bolt', 
+
+    'fa-bomb', //4
+    'fa-bomb', 
+
+    'fa-cube', //5
+    'fa-cube', 
+
+    'fa-diamond', //6
+    'fa-diamond', 
+
+    'fa-leaf', //7
+    'fa-leaf', 
+
+    'fa-paper-plane-o', //8
+    'fa-paper-plane-o'
+];
+*/
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    var 
+        currentIndex = array.length, 
+        temporaryValue, 
+        randomIndex
+    ;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
