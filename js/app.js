@@ -1,8 +1,10 @@
-/*
- * Create a list that holds all of your cards
- */
-var cards = document.querySelector('.deck').getElementsByTagName('li');
-console.log(cards);
+//Dom variables
+var 
+    deck  = document.querySelector('.deck'), //Deck
+    cards = deck.getElementsByTagName('li') //List of cards
+    //cards[0].querySelector('i')
+;
+console.log();
 
 
 /*
@@ -12,7 +14,7 @@ console.log(cards);
  *   - add each card's HTML to the page
  */
 
- //ARRAY OF SYMBOLS FOR CARD icons
+//ARRAY OF SYMBOLS FOR CARD icons
 /*
 var symbolsArray = [
     'fa-anchor', //1
@@ -41,24 +43,12 @@ var symbolsArray = [
 ];
 */
 
-// Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
-    var 
-        currentIndex = array.length, 
-        temporaryValue, 
-        randomIndex
-    ;
+/*Card open and match
+match
+open
+*/
 
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
 
-    return array;
-}
 
 
 /*
@@ -71,3 +61,38 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+//event listener on deck object
+deck.addEventListener('click',
+    function(event){
+        openCard(event.target);
+    },
+    false
+);
+
+ function openCard(card){ //OPEN CARD FUNCTION. Insert event.target into "card"
+    if (!card.classList.contains('open') && !card.classList.contains('match')){
+        card.classList.add('open');
+    }
+    /*else if (card.classList.contains('open')){
+        card.classList.remove('open');
+    }*/
+ }
+
+ // Shuffle function from http://stackoverflow.com/a/2450976
+function shuffle(array) {
+    var
+        currentIndex = array.length,
+        temporaryValue,
+        randomIndex
+        ;
+
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
