@@ -1,11 +1,13 @@
-//Dom variables
+//DomVariables
 var 
     deck  = document.querySelector('.deck'), //Deck
     cards = deck.getElementsByTagName('li') //List of cards
     //cards[0].querySelector('i')
 ;
-console.log();
-
+//Variables
+var
+    cardPair = []
+;
 
 /*
  * Display the cards on the page
@@ -17,29 +19,29 @@ console.log();
 //ARRAY OF SYMBOLS FOR CARD icons
 /*
 var symbolsArray = [
-    'fa-anchor', //1
-    'fa-anchor', 
+    'fa fa-anchor', //1
+    'fa fa-anchor', 
 
-    'fa-bicycle', //2
-    'fa-bicycle', 
+    'fa fa-bicycle', //2
+    'fa fa-bicycle', 
 
-    'fa-bolt', //3
-    'fa-bolt', 
+    'fa fa-bolt', //3
+    'fa fa-bolt', 
 
-    'fa-bomb', //4
-    'fa-bomb', 
+    'fa fa-bomb', //4
+    'fa fa-bomb', 
 
-    'fa-cube', //5
-    'fa-cube', 
+    'fa fa-cube', //5
+    'fa fa-cube', 
 
-    'fa-diamond', //6
-    'fa-diamond', 
+    'fa fa-diamond', //6
+    'fa fa-diamond', 
 
-    'fa-leaf', //7
-    'fa-leaf', 
+    'fa fa-leaf', //7
+    'fa fa-leaf', 
 
-    'fa-paper-plane-o', //8
-    'fa-paper-plane-o'
+    'fa fa-paper-plane-o', //8
+    'fa fa-paper-plane-o'
 ];
 */
 
@@ -53,7 +55,7 @@ open
 
 /*
  * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
+ *  check - display the card's symbol (put this functionality in another function that you call from this one)
  *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
  *  - if the list already has another card, check to see if the two cards match
  *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
@@ -64,18 +66,57 @@ open
 //event listener on deck object
 deck.addEventListener('click',
     function(event){
-        openCard(event.target);
+        cardPair.push(event.target);//add selected card to working pair for comparison
+
+        if (cardPair.length <= 2){
+            openCard(event.target); //open cards
+        }  
+        
+        if (cardPair.length == 2){
+            setTimeout(
+                function(){
+                    matchCardPair(cardPair[0], cardPair[1])
+                },
+                500
+            );
+        }
+        
     },
-    false
+    true
 );
 
- function openCard(card){ //OPEN CARD FUNCTION. Insert event.target into "card"
+ function openCard(card){ //OPEN and MATCH CARD FUNCTION. Insert event.target into "card"
+    
     if (!card.classList.contains('open') && !card.classList.contains('match')){
         card.classList.add('open');
     }
     /*else if (card.classList.contains('open')){
         card.classList.remove('open');
     }*/
+ }
+
+ function matchCardPair(cardOne, cardTwo){
+    var 
+        className1 = cardOne.querySelector('i').className,
+        className2 = cardTwo.querySelector('i').className
+    ;
+    
+    
+
+    if (className1 == className2){
+        cardOne.classList.remove('open');
+        cardTwo.classList.remove('open');
+        
+        cardOne.classList.add('match');
+        cardTwo.classList.add('match');
+    }
+    else if (className1 != className2){
+        cardOne.classList.remove('open');
+        cardTwo.classList.remove('open');
+    }
+
+    cardPair = [];
+    console.log(cardPair);
  }
 
  // Shuffle function from http://stackoverflow.com/a/2450976
@@ -95,4 +136,4 @@ function shuffle(array) {
     }
 
     return array;
-}
+};

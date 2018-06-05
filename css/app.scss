@@ -82,6 +82,10 @@ h1 {
     font-size: 33px;
 }
 
+.deckDeactivate { /*after all cards are matched*/
+    pointer-events: none;
+}
+
 /*
  * Styles for the Score Panel
  */
