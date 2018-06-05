@@ -1,12 +1,15 @@
 //DomVariables
 var 
     deck  = document.querySelector('.deck'), //Deck
-    cards = deck.getElementsByTagName('li') //List of cards
-    //cards[0].querySelector('i')
+    cards = deck.getElementsByTagName('li'), //List of cards
+    gameWinMessage = document.querySelector('#gameWinMessage'),
+    restart = document.getElementsByClassName('restart')[0]    
 ;
+
 //Variables
 var
-    cardPair = []
+    cardPair = [],//card pair for match comparison
+    succesfulCardPairs = 0//count number of successful pairs
 ;
 
 /*
@@ -45,14 +48,6 @@ var symbolsArray = [
 ];
 */
 
-/*Card open and match
-match
-open
-*/
-
-
-
-
 /*
  * set up the event listener for a card. If a card is clicked:
  *  check - display the card's symbol (put this functionality in another function that you call from this one)
@@ -63,29 +58,39 @@ open
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-//event listener on deck object
-deck.addEventListener('click',
+
+deck.addEventListener(//event listener on deck object
+    'click',
     function(event){
         cardPair.push(event.target);//add selected card to working pair for comparison
 
-        if (cardPair.length <= 2){
-            openCard(event.target); //open cards
-        }  
-        
-        if (cardPair.length == 2){
-            setTimeout(
-                function(){
-                    matchCardPair(cardPair[0], cardPair[1])
-                },
-                500
-            );
+        if (cardPair.length <= 2){//open cards
+            openCard(event.target); 
+
+            if (cardPair.length == 2){//evaluate card match
+                setTimeout(
+                    function(){
+                        matchCardPair(cardPair[0], cardPair[1]);
+                        gameWin(succesfulCardPairs);
+                    },
+                    500
+                );
+            }
         }
-        
     },
     true
 );
 
- function openCard(card){ //OPEN and MATCH CARD FUNCTION. Insert event.target into "card"
+restart.addEventListener(
+    'click',
+    function (){
+        resetDeck();
+    },
+    true
+);
+
+
+ function openCard(card){ //OPEN CARD FUNCTION. Insert event.target into "card"
     
     if (!card.classList.contains('open') && !card.classList.contains('match')){
         card.classList.add('open');
@@ -95,29 +100,52 @@ deck.addEventListener('click',
     }*/
  }
 
- function matchCardPair(cardOne, cardTwo){
+ function matchCardPair(cardOne, cardTwo){//MATCH CARD FUNCTION. Insert cardPair[0], cardPair[1] into cardOne, cardTwo
     var 
         className1 = cardOne.querySelector('i').className,
         className2 = cardTwo.querySelector('i').className
     ;
     
+    //remove 'open' class to prep for applying 'match' class
+    cardOne.classList.remove('open');
+    cardTwo.classList.remove('open');
     
 
     if (className1 == className2){
-        cardOne.classList.remove('open');
-        cardTwo.classList.remove('open');
-        
         cardOne.classList.add('match');
         cardTwo.classList.add('match');
-    }
-    else if (className1 != className2){
-        cardOne.classList.remove('open');
-        cardTwo.classList.remove('open');
+
+        succesfulCardPairs += 1;
     }
 
     cardPair = [];
-    console.log(cardPair);
  }
+
+function gameWin(succesfulCardPairs){
+    console.log('game win count down: ' + succesfulCardPairs);
+    
+    if (succesfulCardPairs == 8){
+        gameWinMessage.classList.add('d-block');
+
+        gameWinMessage.addEventListener(//event listener on gameWinMessage to close modal
+            'click',
+            function(){
+                gameWinMessage.classList.remove('d-block');
+                resetDeck();      
+            },
+            true
+        );
+    }
+}
+
+function resetDeck() {//reset the deck of cards by removing open and match classes
+    for (let i = 0; i < cards.length; i++){
+        cards[i].classList.remove('match');
+        cards[i].classList.remove('open');
+
+        succesfulCardPairs = 0;
+    }
+}
 
  // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
