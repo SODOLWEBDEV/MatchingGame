@@ -1,15 +1,18 @@
 //DomVariables
 var 
     deck  = document.querySelector('.deck'), //Deck
-    cards = deck.getElementsByTagName('li'), //List of cards
-    gameWinMessage = document.querySelector('#gameWinMessage'),
-    restart = document.getElementsByClassName('restart')[0]    
+        cards = deck.getElementsByTagName('li'), //List of cards
+    moves = document.getElementsByClassName('moves')[0],
+    gameWinMessage = document.querySelector('#gameWinMessage'),//Game winning modal
+    restart = document.getElementsByClassName('restart')[0]//Restart button
 ;
 
 //Variables
 var
     cardPair = [],//card pair for match comparison
-    succesfulCardPairs = 0//count number of successful pairs
+    succesfulCardPairs = 0,//count number of successful pairs
+    numOfClicks = 0,
+    numOfTries = 0
 ;
 
 /*
@@ -59,6 +62,7 @@ var symbolsArray = [
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
+//Event Listeners
 deck.addEventListener(//event listener on deck object
     'click',
     function(event){
@@ -77,11 +81,13 @@ deck.addEventListener(//event listener on deck object
                 );
             }
         }
+
+        movesCount();
     },
     true
 );
 
-restart.addEventListener(
+restart.addEventListener(//restart button event listener
     'click',
     function (){
         resetDeck();
@@ -89,18 +95,26 @@ restart.addEventListener(
     true
 );
 
+//Functions
 
- function openCard(card){ //OPEN CARD FUNCTION. Insert event.target into "card"
+function gameWin(succesfulCardPairs){ //gameWin Function to display message and reset deck
+    console.log('game win count down: ' + succesfulCardPairs);
     
-    if (!card.classList.contains('open') && !card.classList.contains('match')){
-        card.classList.add('open');
-    }
-    /*else if (card.classList.contains('open')){
-        card.classList.remove('open');
-    }*/
- }
+    if (succesfulCardPairs == 8){
+        gameWinMessage.classList.add('d-block');
 
- function matchCardPair(cardOne, cardTwo){//MATCH CARD FUNCTION. Insert cardPair[0], cardPair[1] into cardOne, cardTwo
+        gameWinMessage.addEventListener(//event listener on gameWinMessage to close modal
+            'click',
+            function(){
+                gameWinMessage.classList.remove('d-block');
+                resetDeck();      
+            },
+            true
+        );
+    }
+}
+
+function matchCardPair(cardOne, cardTwo){//MATCH CARD FUNCTION. Insert cardPair[0], cardPair[1] into cardOne, cardTwo
     var 
         className1 = cardOne.querySelector('i').className,
         className2 = cardTwo.querySelector('i').className
@@ -119,23 +133,26 @@ restart.addEventListener(
     }
 
     cardPair = [];
- }
+}
 
-function gameWin(succesfulCardPairs){
-    console.log('game win count down: ' + succesfulCardPairs);
-    
-    if (succesfulCardPairs == 8){
-        gameWinMessage.classList.add('d-block');
+function movesCount() { //count and display number of moves
+    numOfClicks += 1;
 
-        gameWinMessage.addEventListener(//event listener on gameWinMessage to close modal
-            'click',
-            function(){
-                gameWinMessage.classList.remove('d-block');
-                resetDeck();      
-            },
-            true
-        );
+    if((numOfClicks % 2) == 0 && numOfClicks != 0){
+        ++numOfTries;
     }
+
+    moves.textContent = numOfTries;
+}
+
+function openCard(card){ //OPEN CARD FUNCTION. Insert event.target into "card"
+    
+    if (!card.classList.contains('open') && !card.classList.contains('match')){
+        card.classList.add('open');
+    }
+    /*else if (card.classList.contains('open')){
+        card.classList.remove('open');
+    }*/
 }
 
 function resetDeck() {//reset the deck of cards by removing open and match classes
@@ -143,12 +160,15 @@ function resetDeck() {//reset the deck of cards by removing open and match class
         cards[i].classList.remove('match');
         cards[i].classList.remove('open');
 
+        cardPair = [];
+        numOfClicks = 0;
+        numOfTries = 0;
+            moves.textContent = numOfTries;
         succesfulCardPairs = 0;
     }
 }
-
- // Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
+ 
+function shuffle(array) {// Shuffle function from http://stackoverflow.com/a/2450976
     var
         currentIndex = array.length,
         temporaryValue,
@@ -164,4 +184,8 @@ function shuffle(array) {
     }
 
     return array;
-};
+}
+
+function stars() {
+
+}
