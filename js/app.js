@@ -4,7 +4,8 @@ var
         cards = deck.getElementsByTagName('li'), //List of cards
     moves = document.getElementsByClassName('moves')[0],
     gameWinMessage = document.querySelector('#gameWinMessage'),//Game winning modal
-    restart = document.getElementsByClassName('restart')[0]//Restart button
+    restart = document.getElementsByClassName('restart')[0],//Restart button
+    stars = document.getElementsByClassName('stars')[0]
 ;
 
 //Variables
@@ -12,6 +13,7 @@ var
     cardPair = [],//card pair for match comparison
     succesfulCardPairs = 0,//count number of successful pairs
     numOfClicks = 0,
+    numOfStars = 5,
     numOfTries = 0
 ;
 
@@ -83,6 +85,7 @@ deck.addEventListener(//event listener on deck object
         }
 
         movesCount();
+        starsScoreDisplay();
     },
     true
 );
@@ -160,12 +163,16 @@ function resetDeck() {//reset the deck of cards by removing open and match class
         cards[i].classList.remove('match');
         cards[i].classList.remove('open');
 
-        cardPair = [];
-        numOfClicks = 0;
-        numOfTries = 0;
-            moves.textContent = numOfTries;
-        succesfulCardPairs = 0;
+        
     }
+
+    cardPair = [];
+    numOfClicks = 0;
+    numOfTries = 0;
+        moves.textContent = numOfTries;
+    succesfulCardPairs = 0;
+
+    starsScoreDisplay();
 }
  
 function shuffle(array) {// Shuffle function from http://stackoverflow.com/a/2450976
@@ -186,6 +193,20 @@ function shuffle(array) {// Shuffle function from http://stackoverflow.com/a/245
     return array;
 }
 
-function stars() {
+function starsScoreDisplay() {//display score in stars
+    let 
+        x = numOfStars - Math.floor(numOfTries/5),
+        y = ''
+    ;
 
+    if (x < 1){
+        x = 1;
+    }
+
+    for (let i = 0; i < x; i++){
+        y += '<li><i class="fa fa-star"></i></li>';
+    }
+
+    stars.innerHTML = y;
 }
+starsScoreDisplay();
