@@ -97,17 +97,19 @@ h1 {
   margin-bottom: 10px;
 }
 
-.score-panel .stars {
+.score-panel .stars,
+#gameWinMessage .stars {
   margin: 0;
   padding: 0;
   display: inline-block;
   margin: 0 5px 0 0;
 }
 
-.score-panel .stars li {
+.score-panel .stars li,
+#gameWinMessage .stars li {
   list-style: none;
   display: inline-block;
-  margin: 0 2px 0 0;
+  margin: 0 3px 0 0;
 }
 
 .score-panel .restart {

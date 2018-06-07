@@ -4,6 +4,7 @@ var
         cards = deck.getElementsByTagName('li'), //List of cards
     moves = document.getElementsByClassName('moves')[0],
     gameWinMessage = document.querySelector('#gameWinMessage'),//Game winning modal
+        modalBody = gameWinMessage.getElementsByClassName('modal-body')[0],
     restart = document.getElementsByClassName('restart')[0],//Restart button
     stars = document.getElementsByClassName('stars')[0]
 ;
@@ -114,6 +115,8 @@ function gameWin(succesfulCardPairs){ //gameWin Function to display message and 
             },
             true
         );
+
+        modalBody.innerHTML += stars.outerHTML;
     }
 }
 
@@ -167,6 +170,7 @@ function resetDeck() {//reset the deck of cards by removing open and match class
     }
 
     cardPair = [];
+    modalBody.innerHTML = '<p class="h1">You Won!</p>';
     numOfClicks = 0;
     numOfTries = 0;
         moves.textContent = numOfTries;
@@ -195,7 +199,7 @@ function shuffle(array) {// Shuffle function from http://stackoverflow.com/a/245
 
 function starsScoreDisplay() {//display score in stars
     let 
-        x = numOfStars - Math.floor(numOfTries/5),
+        x = numOfStars - Math.floor(numOfTries/9),
         y = ''
     ;
 
