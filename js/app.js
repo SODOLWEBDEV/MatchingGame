@@ -12,11 +12,15 @@ var
 //Variables
 var
     cardPair = [],//card pair for match comparison
-    succesfulCardPairs = 0,//count number of successful pairs
-    numOfClicks = 0,
-    numOfStars = 5,
-    numOfTries = 0
+        succesfulCardPairs = 0,//count number of successful pairs
+    numOfClicks = 0, //count number of clicks 
+    numOfStars = 3,//initial number of stars
+    numOfTries = 0,//number of tried pairs
+    startTime = 0,
+        endTime = 0,
+        timeDiff = endTime - startTime
 ;
+console.log(startTime - endTime);
 
 /*
  * Display the cards on the page
@@ -87,6 +91,7 @@ deck.addEventListener(//event listener on deck object
 
         movesCount();
         starsScoreDisplay();
+        startTimeCounter();
     },
     true
 );
@@ -102,12 +107,12 @@ restart.addEventListener(//restart button event listener
 //Functions
 
 function gameWin(succesfulCardPairs){ //gameWin Function to display message and reset deck
-    console.log('game win count down: ' + succesfulCardPairs);
-    
     if (succesfulCardPairs == 8){
+        endTimeCounter();
+        
         gameWinMessage.classList.add('d-block');
 
-        gameWinMessage.addEventListener(//event listener on gameWinMessage to close modal
+        gameWinMessage.addEventListener(//event listener on gameWinMessage to close modal and reset deck
             'click',
             function(){
                 gameWinMessage.classList.remove('d-block');
@@ -116,7 +121,11 @@ function gameWin(succesfulCardPairs){ //gameWin Function to display message and 
             true
         );
 
-        modalBody.innerHTML += stars.outerHTML;
+        modalBody.innerHTML += //set modal message with score and elapsed time
+            stars.outerHTML +
+            "<br> Time: " + timeDiff + " seconds"
+        ;
+
     }
 }
 
@@ -165,8 +174,6 @@ function resetDeck() {//reset the deck of cards by removing open and match class
     for (let i = 0; i < cards.length; i++){
         cards[i].classList.remove('match');
         cards[i].classList.remove('open');
-
-        
     }
 
     cardPair = [];
@@ -174,6 +181,9 @@ function resetDeck() {//reset the deck of cards by removing open and match class
     numOfClicks = 0;
     numOfTries = 0;
         moves.textContent = numOfTries;
+    startTime = 0;
+        endTime = 0;
+        timeDiff = 0;
     succesfulCardPairs = 0;
 
     starsScoreDisplay();
@@ -199,18 +209,30 @@ function shuffle(array) {// Shuffle function from http://stackoverflow.com/a/245
 
 function starsScoreDisplay() {//display score in stars
     let 
-        x = numOfStars - Math.floor(numOfTries/9),
+        x = numOfStars - Math.floor(numOfTries/9),//number of stars to display
         y = ''
     ;
 
-    if (x < 1){
+    if (x < 1){//lower limit of star count
         x = 1;
     }
 
-    for (let i = 0; i < x; i++){
+    for (let i = 0; i < x; i++){//output score
         y += '<li><i class="fa fa-star"></i></li>';
     }
 
     stars.innerHTML = y;
 }
-starsScoreDisplay();
+
+function startTimeCounter(){
+    if (startTime == 0){
+        startTime = new Date();
+    }
+}
+
+function endTimeCounter(){
+    if (endTime == 0){
+        endTime = new Date();
+        timeDiff = (endTime - startTime) / 1000;
+    }
+}
