@@ -12,6 +12,31 @@ var
 
 //Variables
 var
+    cardIcons = [
+        'fa fa-anchor', //1
+        'fa fa-anchor', 
+
+        'fa fa-bicycle', //2
+        'fa fa-bicycle', 
+
+        'fa fa-bolt', //3
+        'fa fa-bolt', 
+
+        'fa fa-bomb', //4
+        'fa fa-bomb', 
+
+        'fa fa-cube', //5
+        'fa fa-cube', 
+
+        'fa fa-diamond', //6
+        'fa fa-diamond', 
+
+        'fa fa-leaf', //7
+        'fa fa-leaf', 
+
+        'fa fa-paper-plane-o', //8
+        'fa fa-paper-plane-o'
+    ],
     cardPair = [],//card pair for match comparison
         succesfulCardPairs = 0,//count number of successful pairs
     numOfClicks = 0, //count number of clicks 
@@ -24,52 +49,12 @@ var
         timeDiff = endTime - startTime
 ;
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
-
 //ARRAY OF SYMBOLS FOR CARD icons
 /*
 var symbolsArray = [
-    'fa fa-anchor', //1
-    'fa fa-anchor', 
-
-    'fa fa-bicycle', //2
-    'fa fa-bicycle', 
-
-    'fa fa-bolt', //3
-    'fa fa-bolt', 
-
-    'fa fa-bomb', //4
-    'fa fa-bomb', 
-
-    'fa fa-cube', //5
-    'fa fa-cube', 
-
-    'fa fa-diamond', //6
-    'fa fa-diamond', 
-
-    'fa fa-leaf', //7
-    'fa fa-leaf', 
-
-    'fa fa-paper-plane-o', //8
-    'fa fa-paper-plane-o'
+    
 ];
 */
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  check - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
 
 //Event Listeners
 deck.addEventListener(//event listener on deck object
@@ -174,6 +159,14 @@ function openCard(card){ //OPEN CARD FUNCTION. Insert event.target into "card"
     }*/
 }
 
+function randomizeDeck(x){
+    x = shuffle(x);
+
+    for(let i = 0; i < x.length; i++){
+        cards[i].getElementsByTagName('i')[0].className = x[i];
+    }
+}randomizeDeck(cardIcons);
+
 function resetDeck() {//reset the deck of cards by removing open and match classes
     for (let i = 0; i < cards.length; i++){
         cards[i].classList.remove('match');
@@ -193,6 +186,7 @@ function resetDeck() {//reset the deck of cards by removing open and match class
         timeDiff = 0;
     succesfulCardPairs = 0;
 
+    randomizeDeck(cardIcons);
     starsScoreDisplay();
 }
  
