@@ -1,10 +1,11 @@
 //DomVariables
 var 
+    counter = document.getElementsByClassName('timer')[0].getElementsByClassName('counter')[0],
     deck  = document.querySelector('.deck'), //Deck
         cards = deck.getElementsByTagName('li'), //List of cards
-    moves = document.getElementsByClassName('moves')[0],
     gameWinMessage = document.querySelector('#gameWinMessage'),//Game winning modal
         modalBody = gameWinMessage.getElementsByClassName('modal-body')[0],
+    moves = document.getElementsByClassName('moves')[0],
     restart = document.getElementsByClassName('restart')[0],//Restart button
     stars = document.getElementsByClassName('stars')[0]
 ;
@@ -18,9 +19,10 @@ var
     numOfTries = 0,//number of tried pairs
     startTime = 0,
         endTime = 0,
+        nowTime = 0,
+            runningTimerCheck = 0,
         timeDiff = endTime - startTime
 ;
-console.log(startTime - endTime);
 
 /*
  * Display the cards on the page
@@ -92,6 +94,7 @@ deck.addEventListener(//event listener on deck object
         movesCount();
         starsScoreDisplay();
         startTimeCounter();
+        setInterval(displayRunningTimer, 500);
     },
     true
 );
@@ -123,7 +126,8 @@ function gameWin(succesfulCardPairs){ //gameWin Function to display message and 
 
         modalBody.innerHTML += //set modal message with score and elapsed time
             stars.outerHTML +
-            "<br> Time: " + timeDiff + " seconds"
+            "<br> Time: " + timeDiff + " seconds<br>" +
+            "<p>Click anywhere if you'd like to play again."
         ;
 
     }
@@ -177,19 +181,22 @@ function resetDeck() {//reset the deck of cards by removing open and match class
     }
 
     cardPair = [];
+    counter.innerHTML = 0;
     modalBody.innerHTML = '<p class="h1">You Won!</p>';
     numOfClicks = 0;
     numOfTries = 0;
         moves.textContent = numOfTries;
     startTime = 0;
         endTime = 0;
+        nowTime = 0;
+            runningTimerCheck = 0;
         timeDiff = 0;
     succesfulCardPairs = 0;
 
     starsScoreDisplay();
 }
  
-function shuffle(array) {// Shuffle function from http://stackoverflow.com/a/2450976
+function shuffle(array){// Shuffle function from http://stackoverflow.com/a/2450976
     var
         currentIndex = array.length,
         temporaryValue,
@@ -222,17 +229,30 @@ function starsScoreDisplay() {//display score in stars
     }
 
     stars.innerHTML = y;
-}
+}starsScoreDisplay();
 
-function startTimeCounter(){
+function startTimeCounter(){//start timer
     if (startTime == 0){
         startTime = new Date();
     }
-}
 
-function endTimeCounter(){
+    runningTimerCheck = 1;
+}
+function endTimeCounter(){//end timer
     if (endTime == 0){
         endTime = new Date();
-        timeDiff = (endTime - startTime) / 1000;
+        timeDiff = Math.round((endTime - startTime) / 1000);
     }
+}
+function displayRunningTimer(){
+    nowTime = new Date();
+
+    timeDiff = Math.round((nowTime - startTime) / 1000);
+
+    if(runningTimerCheck == 0){
+        counter.innerHTML = 0;
+    }
+    else if(runningTimerCheck == 1){
+        counter.innerHTML = timeDiff;
+    }    
 }

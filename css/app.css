@@ -118,7 +118,7 @@ h1 {
 }
 
 #gameWinMessage {
-  position: absolute;
+  position: fixed;
   color: #02ccba;
   background-color: rgba(2, 204, 186, 0.5);
 }
