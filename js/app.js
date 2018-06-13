@@ -58,8 +58,11 @@ deck.addEventListener(//event listener on deck object
             let x = cardPair.pop();
             console.log(!event.target.classList.contains('card'));
         }
-        else{
+        else{//start everything
             movesCount();
+            startTimeCounter();
+            starsScoreDisplay();
+            setInterval(displayRunningTimer, 500);
         }
 
         if (cardPair.length <= 2 && event.target.classList.contains('card')){//open cards
@@ -77,10 +80,6 @@ deck.addEventListener(//event listener on deck object
         }
 
         console.log(cardPair);        
-        
-        starsScoreDisplay();
-        startTimeCounter();
-        setInterval(displayRunningTimer, 500);
     },
     true
 );
