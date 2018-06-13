@@ -54,9 +54,12 @@ deck.addEventListener(//event listener on deck object
     'click',
     function(event){
         cardPair.push(event.target);//add selected card to working pair for comparison
-        if (!event.target.classList.contains('card')){
+        if (!event.target.classList.contains('card')){//evaluate cardPair elements
             let x = cardPair.pop();
-            console.log(event.target.classList.contains('card'));
+            console.log(!event.target.classList.contains('card'));
+        }
+        else{
+            movesCount();
         }
 
         if (cardPair.length <= 2 && event.target.classList.contains('card')){//open cards
@@ -73,10 +76,8 @@ deck.addEventListener(//event listener on deck object
             }
         }
 
-        console.log(cardPair);
-        console.log((cardPair[0] == cardPair[1] && !event.target.classList.contains('card')));
+        console.log(cardPair);        
         
-        movesCount();
         starsScoreDisplay();
         startTimeCounter();
         setInterval(displayRunningTimer, 500);
