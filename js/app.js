@@ -49,20 +49,17 @@ var
         timeDiff = endTime - startTime
 ;
 
-//ARRAY OF SYMBOLS FOR CARD icons
-/*
-var symbolsArray = [
-    
-];
-*/
-
 //Event Listeners
 deck.addEventListener(//event listener on deck object
     'click',
     function(event){
         cardPair.push(event.target);//add selected card to working pair for comparison
+        if (!event.target.classList.contains('card')){
+            let x = cardPair.pop();
+            console.log(event.target.classList.contains('card'));
+        }
 
-        if (cardPair.length <= 2){//open cards
+        if (cardPair.length <= 2 && event.target.classList.contains('card')){//open cards
             openCard(event.target); 
 
             if (cardPair.length == 2){//evaluate card match
@@ -76,6 +73,9 @@ deck.addEventListener(//event listener on deck object
             }
         }
 
+        console.log(cardPair);
+        console.log((cardPair[0] == cardPair[1] && !event.target.classList.contains('card')));
+        
         movesCount();
         starsScoreDisplay();
         startTimeCounter();
@@ -118,7 +118,7 @@ function gameWin(succesfulCardPairs){ //gameWin Function to display message and 
     }
 }
 
-function matchCardPair(cardOne, cardTwo){//MATCH CARD FUNCTION. Insert cardPair[0], cardPair[1] into cardOne, cardTwo
+function matchCardPair(cardOne, cardTwo){//MATCH CARD FUNCTION. Insert cardPair[0], cardPair[1] into cardOne, cardTwo 
     var 
         className1 = cardOne.querySelector('i').className,
         className2 = cardTwo.querySelector('i').className

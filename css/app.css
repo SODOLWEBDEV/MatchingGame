@@ -74,6 +74,7 @@ h1 {
   background: #02b3e4;
   cursor: default;
   font-size: 33px;
+  pointer-events: none;
 }
 
 .deck .card.match {
@@ -81,9 +82,10 @@ h1 {
   cursor: default;
   background: #02ccba;
   font-size: 33px;
+  pointer-events: none;
 }
 
-.deck-Deactivate {
+.deck-Deactivate .deck {
   /*after all cards are matched*/
   pointer-events: none;
 }

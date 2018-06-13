@@ -74,15 +74,19 @@ h1 {
     background: #02b3e4;
     cursor: default;
     font-size: 33px;
+
+    pointer-events: none;
 }
 
 .deck .card.match { /*changes background color to match color*/
     cursor: default;
     background: #02ccba;
     font-size: 33px;
+
+    pointer-events: none;
 }
 
-.deck-Deactivate { /*after all cards are matched*/
+.deck-Deactivate .deck { /*after all cards are matched*/
     pointer-events: none;
 }
 
