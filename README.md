@@ -15,7 +15,9 @@ To reset the board, click on the curled arrow at the right end of the status bar
 
 ##Dependencies
 
-Bootstrap 4
+* [Bootstrap 4](https://getbootstrap.com/).
+* [Font Awesome](https://fontawesome.com/).
+* [Google Fonts](https://fonts.google.com/).
 
 ## Contributing
 
