@@ -56,7 +56,6 @@ deck.addEventListener(//event listener on deck object
         cardPair.push(event.target);//add selected card to working pair for comparison
         if (!event.target.classList.contains('card')){//evaluate cardPair elements
             let x = cardPair.pop();
-            console.log(!event.target.classList.contains('card'));
         }
         else{//start everything
             movesCount();
@@ -78,8 +77,6 @@ deck.addEventListener(//event listener on deck object
                 );
             }
         }
-
-        console.log(cardPair);        
     },
     true
 );
